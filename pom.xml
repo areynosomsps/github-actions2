@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>ff445969-2f29-4500-a793-e2487267c501</groupId>
+	<groupId>ea6a70ba-3852-4d98-b29b-9643e0c3534d</groupId>
 	<artifactId>github-actions</artifactId>
-	<version>1.0.11</version>
+	<version>1.1.5</version>
 	<packaging>mule-application</packaging>
-
 	<name>github-actions</name>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -16,8 +16,10 @@
 		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
 		<app.name>github-actions</app.name>
 		<env>Sandbox</env>
+		<releaseChannel>Edge</releaseChannel>
+		<region>Cloudhub-US-East-2</region>
+		<serverId>Repository</serverId>
 	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -31,15 +33,15 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					<classifier>---- select project type ----</classifier>
+					<classifier>mule-application</classifier>
 					<cloudhub2Deployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
-						<environment>Sandbox</environment>
-						<target>Cloudhub-US-East-2</target>
-						<server>Repository</server>
+						<environment>${env}</environment>
+						<target>${region}</target>
+						<server>${serverId}</server>
 						<applicationName>${project.artifactId}</applicationName>
-						<releaseChannel>Edge</releaseChannel>
+						<releaseChannel>${releaseChannel}</releaseChannel>
 						<replicas>1</replicas>
 						<vCores>0.1</vCores>
 						<deploymentSettings>
@@ -80,7 +82,7 @@
 			<layout>default</layout>
 		</repository>
 		<repository>
-			<id>Repository</id>
+			<id>${serverId}</id>
 			<name>Private Exchange repository</name>
 			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
 			<layout>default</layout>
@@ -101,8 +103,8 @@
 
 	<distributionManagement>
 		<repository>
-			<id>Repository</id>
-			<name>Corporate Repository</name>
+			<id>${serverId}</id>
+			<name>Private Exchange repository</name>
 			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
 			<layout>default</layout>
 		</repository>
